@@ -15,3 +15,6 @@ sudo snap install insomnia
 sudo snap install kotlin-native
 sudo snap install slack
 sudo snap install discord
+
+git config --global user.email "shannor.a.trotty@gmail.com"
+git config --global user.name "Shannor"

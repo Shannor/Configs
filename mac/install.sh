@@ -1,6 +1,10 @@
 # install home brew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
+git config --global user.email "shannor.a.trotty@gmail.com"
+git config --global user.name "Shannor"
+
+
 brew install node
 brew install httpie
 brew install htop
