@@ -3,7 +3,9 @@ sudo apt install htop
 sudo apt install ctop
 sudo apt install docker.io
 sudo apt install docker-compose
-
+sudo apt install golang
+# Providesd ubuntu customizations
+sudo apt install gnome-tweak-tool
 
 # Snap installs
 sudo snap install intellij-idea-ultimate --classic
@@ -16,5 +18,14 @@ sudo snap install kotlin-native
 sudo snap install slack
 sudo snap install discord
 
-git config --global user.email "shannor.a.trotty@gmail.com"
-git config --global user.name "Shannor"
+
+# Setup for ZSH shell
+sudo apt-get install zsh
+sudo apt-get install git-core
+
+wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
+chsh -s `which zsh`
+
+
+# Shutdown for any restarts needed.
+sudo shutdown -r 0
