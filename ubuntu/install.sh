@@ -26,6 +26,8 @@ sudo apt-get install git-core
 wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
 chsh -s `which zsh`
 
+sudo groupadd docker
+sudo usermod -aG docker $USER
 
 # Shutdown for any restarts needed.
 sudo shutdown -r 0
