@@ -1,3 +1,9 @@
+# Move other configs to $HOME
+cp .gitconfig ~
+cp .zshrc ~
+cp .gitignore_global ~
+
+# Apt installs
 sudo apt update
 sudo apt -y install htop
 sudo apt -y install ctop
@@ -5,7 +11,6 @@ sudo apt -y install docker.io
 sudo apt -y install docker-compose
 sudo apt -y install golang
 sudo apt -y install terminator
-# Provide-y sd ubuntu customizations
 sudo apt -y install gnome-tweak-tool
 sudo apt -y install curl
 sudo apt -y install vim
@@ -39,11 +44,11 @@ fc-cache -vf ~/.local/share/fonts/
 mkdir -p ~/.config/fontconfig/conf.d/
 mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
 
-
+# Setup for Docker
 sudo groupadd docker
 sudo usermod -aG docker $USER
 
-#Install GCP-cli
+#Setup for GCP-cli
 export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
 echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -

@@ -39,7 +39,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -49,7 +49,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -74,13 +74,13 @@ POWERLEVEL9K_PROMPT_ON_NEWLINE=false
 
 # User configuration
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/shannortrotty/Documents/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/shannortrotty/Documents/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '$~/Documents/google-cloud-sdk/path.zsh.inc' ]; then source '~/Documents/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/shannortrotty/Documents/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/shannortrotty/Documents/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '~/Documents/google-cloud-sdk/completion.zsh.inc' ]; then source '$~/Documents/google-cloud-sdk/completion.zsh.inc'; fi
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"
-export PATH="$HOME/flutter/bin:$PATH"
+# export PATH="$HOME/flutter/bin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -97,7 +97,7 @@ export PATH="$HOME/flutter/bin:$PATH"
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
+export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -108,4 +108,7 @@ export PATH="$HOME/flutter/bin:$PATH"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+
+#ZSH setting changes
 unsetopt share_history
+setopt extended_history #Save timestamp of command and duration
