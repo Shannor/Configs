@@ -1,4 +1,4 @@
-
+sudo apt update
 sudo apt -y install htop
 sudo apt -y install ctop
 sudo apt -y install docker.io
@@ -9,6 +9,8 @@ sudo apt -y install terminator
 sudo apt -y install gnome-tweak-tool
 sudo apt -y install curl
 sudo apt -y install vim
+sudo apt -y install python-pip
+sudo apt -y install python3-pip
 
 # Snap installs
 sudo snap install intellij-idea-ultimate --classic
@@ -26,6 +28,17 @@ sudo apt-get -y install git
 
 wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
 chsh -s `which zsh`
+
+pip install --user powerline-status
+git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+mkdir -p  ~/.local/share/fonts/
+mv PowerlineSymbols.otf ~/.local/share/fonts/
+fc-cache -vf ~/.local/share/fonts/
+mkdir -p ~/.config/fontconfig/conf.d/
+mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
+
 
 sudo groupadd docker
 sudo usermod -aG docker $USER
