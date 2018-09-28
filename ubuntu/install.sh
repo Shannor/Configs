@@ -16,6 +16,8 @@ sudo apt -y install curl
 sudo apt -y install vim
 sudo apt -y install python-pip
 sudo apt -y install python3-pip
+sudo apt -y install vim
+sudo apt -y install npm
 
 # Snap installs
 sudo snap install intellij-idea-ultimate --classic
