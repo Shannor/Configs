@@ -8,7 +8,7 @@ brew install ctop
 brew install pyenv
 brew install jq
 brew install docker-compose
-brew install go
+brew install golang
 
 
 brew cask install alfred

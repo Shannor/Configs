@@ -1,0 +1,6 @@
+[user]
+	name = Shannor Trotty
+	email = shannor.a.trotty@gmail.com
+[color]
+	# Enable colors in color-supporting terminals
+	ui = auto
