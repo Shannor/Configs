@@ -3,6 +3,7 @@ sudo apt install htop
 sudo apt install ctop
 sudo apt install docker.io
 sudo apt install docker-compose
+sudo apt-get install terminator
 
 
 # Snap installs
