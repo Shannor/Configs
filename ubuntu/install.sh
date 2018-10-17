@@ -6,7 +6,6 @@ cp .gitignore_global ~
 # Apt installs
 sudo apt update
 sudo apt -y install htop
-sudo apt -y install ctop
 sudo apt -y install docker.io
 sudo apt -y install docker-compose
 sudo apt -y install golang
@@ -18,6 +17,11 @@ sudo apt -y install python-pip
 sudo apt -y install python3-pip
 sudo apt -y install vim
 sudo apt -y install npm
+sudo apt -y install awesome
+
+# Installs ctop
+sudo wget https://github.com/bcicen/ctop/releases/download/v0.7.1/ctop-0.7.1-linux-amd64 -O /usr/local/bin/ctop
+sudo chmod +x /usr/local/bin/ctop
 
 # Snap installs
 sudo snap install intellij-idea-ultimate --classic

@@ -80,6 +80,7 @@ if [ -f '$~/Documents/google-cloud-sdk/path.zsh.inc' ]; then source '~/Documents
 if [ -f '~/Documents/google-cloud-sdk/completion.zsh.inc' ]; then source '$~/Documents/google-cloud-sdk/completion.zsh.inc'; fi
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"
+export GIT_EDITOR=vim
 # export PATH="$HOME/flutter/bin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -112,3 +113,7 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 #ZSH setting changes
 unsetopt share_history
 setopt extended_history #Save timestamp of command and duration
+
+#docker aliases 
+alias dps='docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Status}}"'
+alias dport='docker ps -a --format "table {{.Names}}:\t{{.Ports}}"'

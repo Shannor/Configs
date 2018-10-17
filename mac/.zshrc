@@ -113,3 +113,7 @@ export PATH="$HOME/flutter/bin:$PATH"
 
 unsetopt inc_append_history
 unsetopt share_history
+
+#docker aliases 
+alias dps='docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Status}}"'
+alias dport='docker ps -a --format "table {{.Names}}:\t{{.Ports}}"'
