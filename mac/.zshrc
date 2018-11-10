@@ -117,3 +117,4 @@ unsetopt share_history
 #docker aliases 
 alias dps='docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Status}}"'
 alias dport='docker ps -a --format "table {{.Names}}:\t{{.Ports}}"'
+alias dl='docker logs -f'
