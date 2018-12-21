@@ -4,3 +4,6 @@
 [color]
 	# Enable colors in color-supporting terminals
 	ui = auto
+[pager]
+	# Removes pager from the branch call
+	branch = false
