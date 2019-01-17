@@ -12,5 +12,12 @@ alias gs="git status"
 alias gp="git pull"
 alias gc='git checkout'
 
+
+#docker aliases 
+alias dps='docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Status}}"'
+alias dport='docker ps -a --format "table {{.Names}}:\t{{.Ports}}"'
+alias dl='docker logs -f'
+
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"
+export PATH="/usr/local/bin:${PATH}"
