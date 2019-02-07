@@ -119,3 +119,5 @@ unsetopt share_history
 alias dps='docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Status}}"'
 alias dport='docker ps -a --format "table {{.Names}}:\t{{.Ports}}"'
 alias dl='docker logs -f'
+alias drma='docker rm -f $(docker ps -aq)'
+alias dpa='docker system prune -a --volumes'

@@ -11,6 +11,7 @@ brew doctor
 brew tap caskroom/cask  
 
 brew install node
+brew install pyenv
 brew install httpie
 brew install htop
 brew install ctop
@@ -21,13 +22,13 @@ brew install golang
 brew install git
 # brew install bash-completion  #Only if bash install
 
+cp .bash_profile $HOME/.bash_profile
 # Setup for zsh and themes
 cp .zshrc $HOME/.zshrc
 brew install zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 # chsh -s $(which zsh)
 # git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-
 
 # Scala needs Java first
 brew cask install java
@@ -42,5 +43,9 @@ brew cask install visual-studio-code
 brew cask install authy
 brew cask install iterm2
 brew cask install postman
+brew cask install insomnia
+#  Add pyenv init to bash profile
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bash_profile
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
 
 brew cleanup
