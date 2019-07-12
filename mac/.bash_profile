@@ -11,6 +11,7 @@ alias la='ls -a'
 alias gs="git status"
 alias gp="git pull"
 alias gc='git checkout'
+alias dclean='docker rmi $( docker images -q -f dangling=true)'
 
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"

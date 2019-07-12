@@ -118,3 +118,4 @@ unsetopt share_history
 alias dps='docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Status}}"'
 alias dport='docker ps -a --format "table {{.Names}}:\t{{.Ports}}"'
 alias dl='docker logs -f'
+alias dclean='docker rmi $( docker images -q -f dangling=true)'
