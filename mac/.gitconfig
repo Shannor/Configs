@@ -7,3 +7,5 @@
 [pager]
 	# Removes pager from the branch call
 	branch = false
+[credential]
+	helper = osxkeychain
