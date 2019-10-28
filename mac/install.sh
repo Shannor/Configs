@@ -8,10 +8,10 @@
 
 brew update
 brew doctor
-brew tap caskroom/cask  
 
 brew install node
 brew install pyenv
+Brew install rbenv
 brew install jenv
 brew install httpie
 brew install htop
@@ -48,6 +48,8 @@ brew cask install insomnia
 #  Add pyenv init to bash profile
 echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bash_profile
 echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
+echo -e 'if command -v rbenv 1>/dev/null 2>&1; then\n  eval "$(rbenv init -)"\nfi' >> ~/.zshrc
 echo 'export PATH="$HOME/.jenv/bin:$PATH"' >> ~/.bash_profile
 echo 'eval "$(jenv init -)"' >> ~/.bash_profile
+
 brew cleanup

@@ -65,6 +65,7 @@ plugins=(
   npm
   brew
   docker
+  docker-compose
   httpie
   jsontools
 )
@@ -76,7 +77,6 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(root_indicator background_jobs pyenv go_vers
 POWERLEVEL9K_PROMPT_ON_NEWLINE=false
 
 # User configuration
-eval "$(pyenv init -)"
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/shannortrotty/Documents/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/shannortrotty/Documents/google-cloud-sdk/path.zsh.inc'; fi
 
@@ -114,11 +114,3 @@ export PATH="$HOME/flutter/bin:$PATH"
 
 unsetopt inc_append_history
 unsetopt share_history
-
-#docker aliases 
-alias dps='docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Status}}"'
-alias dport='docker ps -a --format "table {{.Names}}:\t{{.Ports}}"'
-alias dl='docker logs -f'
-alias dclean='docker rmi $( docker images -q -f dangling=true)'
-alias drma='docker rm -f $(docker ps -aq)'
-alias dpa='docker system prune -a --volumes'
