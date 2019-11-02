@@ -70,6 +70,7 @@ plugins=(
   jsontools
 )
 
+ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir vcs)
