@@ -1,0 +1,65 @@
+Plug 'tpope/vim-surround'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'easymotion/vim-easymotion'
+Plug 'machakann/vim-highlightedyank'
+Plug 'preservim/nerdtree'
+
+source ~/.vimrc
+
+set quickscope
+
+imap jk <Esc>
+let mapleader = ","
+nmap <leader>ne :NERDTree<cr>
+
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+nnoremap j gj
+nnoremap k gk
+
+" Remap multiple-cursors shortcuts to match terryma/vim-multiple-cursors
+nmap <C-n> <Plug>NextWholeOccurrence
+xmap <C-n> <Plug>NextWholeOccurrence
+nmap g<C-n> <Plug>NextOccurrence
+xmap g<C-n> <Plug>NextOccurrence
+nmap <C-x> <Plug>SkipOccurrence
+xmap <C-x> <Plug>SkipOccurrence
+nmap <C-p> <Plug>RemoveOccurrence
+xmap <C-p> <Plug>RemoveOccurrence
+
+" Split screen vertically
+nnoremap <leader>w <C-w>v<C-w>l
+" Split horizontally
+nnoremap <leader>q <C-w>s<C-w>l
+
+" IDE implementation flows, glance view, implementation, then interface
+nmap <leader>u <Action>(ShowHoverInfo)
+nmap <leader>y <Action>(QuickImplementations)
+nmap <leader>b <Action>(GotoImplementation)
+nmap <leader>g <Action>(GotoSuperMethod)
+
+" Menu helpers
+nmap <leader>i <Action>(RefactoringMenu)
+nmap <leader>o <Action>(ShowErrorDescription)
+nmap <leader>ai <Action>(ShowIntentionActions)
+
+" Switching tabs
+nmap <leader>[ <Action>(PreviousTab)
+nmap <leader>] <Action>(NextTab)
+
+" Relies on TabShifter plugin to be installed, Only changes focus
+nmap <C-h> <Action>(TabShiftActions.MoveFocusLeft)
+nmap <C-j> <Action>(TabShiftActions.MoveFocusDown)
+nmap <C-k> <Action>(TabShiftActions.MoveFocusUp)
+nmap <C-l> <Action>(TabShiftActions.MoveFocusRight)
+
+
+" Configs for QuickScope plugin
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+let g:qs_accepted_chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
