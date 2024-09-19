@@ -1,12 +1,11 @@
 Plug 'tpope/vim-surround'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'easymotion/vim-easymotion'
 Plug 'machakann/vim-highlightedyank'
 Plug 'preservim/nerdtree'
 
 source ~/.vimrc
-
-set quickscope
+set multicursor
+set sneak
 
 imap jk <Esc>
 let mapleader = ","
@@ -59,7 +58,3 @@ nmap <C-j> <Action>(TabShiftActions.MoveFocusDown)
 nmap <C-k> <Action>(TabShiftActions.MoveFocusUp)
 nmap <C-l> <Action>(TabShiftActions.MoveFocusRight)
 
-
-" Configs for QuickScope plugin
-let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
-let g:qs_accepted_chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']

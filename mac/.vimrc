@@ -1,6 +1,5 @@
 set surround
 set which-key
-set easymotion
 
 set timeoutlen = 7000
 
