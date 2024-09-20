@@ -1,16 +1,20 @@
 Plug 'tpope/vim-surround'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'machakann/vim-highlightedyank'
 Plug 'preservim/nerdtree'
 
 source ~/.vimrc
 set multicursor
 set sneak
+" Must come after sneak
+set quickscope
+set timeoutlen=100000
+
 
 imap jk <Esc>
 let mapleader = ","
 nmap <leader>ne :NERDTree<cr>
 
+" Stop bad habits with arrow keys
 nnoremap <up> <nop>
 nnoremap <down> <nop>
 nnoremap <left> <nop>
@@ -21,16 +25,6 @@ inoremap <left> <nop>
 inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
-
-" Remap multiple-cursors shortcuts to match terryma/vim-multiple-cursors
-nmap <C-n> <Plug>NextWholeOccurrence
-xmap <C-n> <Plug>NextWholeOccurrence
-nmap g<C-n> <Plug>NextOccurrence
-xmap g<C-n> <Plug>NextOccurrence
-nmap <C-x> <Plug>SkipOccurrence
-xmap <C-x> <Plug>SkipOccurrence
-nmap <C-p> <Plug>RemoveOccurrence
-xmap <C-p> <Plug>RemoveOccurrence
 
 " Split screen vertically
 nnoremap <leader>w <C-w>v<C-w>l
@@ -48,13 +42,27 @@ nmap <leader>i <Action>(RefactoringMenu)
 nmap <leader>o <Action>(ShowErrorDescription)
 nmap <leader>ai <Action>(ShowIntentionActions)
 
-" Switching tabs
+" Switching tabs, use Idea mappings for this instead Ctrl + Shift + < / > or the arrow keys
 nmap <leader>[ <Action>(PreviousTab)
 nmap <leader>] <Action>(NextTab)
 
 " Relies on TabShifter plugin to be installed, Only changes focus
-nmap <C-h> <Action>(TabShiftActions.MoveFocusLeft)
 nmap <C-j> <Action>(TabShiftActions.MoveFocusDown)
+nmap <C-h> <Action>(TabShiftActions.MoveFocusLeft)
 nmap <C-k> <Action>(TabShiftActions.MoveFocusUp)
 nmap <C-l> <Action>(TabShiftActions.MoveFocusRight)
+
+" Git Short cuts
+nmap <leader>c <Action>(GitCheckoutFromInputAction)
+nmap <leader>b <Action>(GitNewBranchAction)
+
+" AI short cuts
+nmap <leader>k <Action>(Vcs.LLMCommitMessageAction)
+
+" Config for Quickscope
+let g:qs_accepted_chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+" TODO: Update these to colors I like in the future
+let g:qs_primary_color = '#ff0000'
+let g:qs_secondary_color = '#ff00ff'
 
