@@ -53,7 +53,6 @@ nmap <C-k> <Action>(TabShiftActions.MoveFocusUp)
 nmap <C-l> <Action>(TabShiftActions.MoveFocusRight)
 
 " Git Short cuts
-nmap <leader>c <Action>(GitCheckoutFromInputAction)
 nmap <leader>b <Action>(GitNewBranchAction)
 
 " AI short cuts
