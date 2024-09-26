@@ -1,17 +1,25 @@
-Plug 'tpope/vim-surround'
 Plug 'machakann/vim-highlightedyank'
 Plug 'preservim/nerdtree'
 
 source ~/.vimrc
-set multicursor
-set sneak
-" Must come after sneak
-set quickscope
 set timeoutlen=100000
+set surround
 
+set multicursor
+" Quick hand for placing cursors after a search
+map q <Plug>(multicursor-ms/)
+map z <Plug>(multicursor-mcv)
+map Z <Plug>(multicursor-mcr)
 
 imap jk <Esc>
+
 let mapleader = ","
+" <leader><leader> to activate
+set easymotion
+"Search for chars in single line
+nmap s <Plug>(easymotion-sl)
+
+
 nmap <leader>ne :NERDTree<cr>
 
 " Stop bad habits with arrow keys
@@ -46,22 +54,15 @@ nmap <leader>ai <Action>(ShowIntentionActions)
 nmap <leader>[ <Action>(PreviousTab)
 nmap <leader>] <Action>(NextTab)
 
+" See file in tree view
+nmap <leader>f <Action>(SelectInProjectView)
+
 " Relies on TabShifter plugin to be installed, Only changes focus
 nmap <C-j> <Action>(TabShiftActions.MoveFocusDown)
 nmap <C-h> <Action>(TabShiftActions.MoveFocusLeft)
 nmap <C-k> <Action>(TabShiftActions.MoveFocusUp)
 nmap <C-l> <Action>(TabShiftActions.MoveFocusRight)
 
-" Git Short cuts
-nmap <leader>ch <Action>(GitNewBranchAction)
-
 " AI short cuts
 nmap <leader>k <Action>(Vcs.LLMCommitMessageAction)
-
-" Config for Quickscope
-let g:qs_accepted_chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-
-" TODO: Update these to colors I like in the future
-let g:qs_primary_color = '#ff0000'
-let g:qs_secondary_color = '#ff00ff'
 
