@@ -63,6 +63,11 @@ nmap <C-h> <Action>(TabShiftActions.MoveFocusLeft)
 nmap <C-k> <Action>(TabShiftActions.MoveFocusUp)
 nmap <C-l> <Action>(TabShiftActions.MoveFocusRight)
 
+nmap <leader>j <Action>(TabShiftActions.ShiftDown)
+nmap <leader>h <Action>(TabShiftActions.ShiftLeft)
+nmap <leader>k <Action>(TabShiftActions.ShiftUp)
+nmap <leader>l <Action>(TabShiftActions.ShiftRight)
+
 " AI short cuts
 nmap <leader>k <Action>(Vcs.LLMCommitMessageAction)
 
