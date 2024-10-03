@@ -62,12 +62,10 @@ ZSH_THEME="robbyrussell"
 plugins=(
   git
   wd
-  npm
   brew
   docker
   docker-compose
-  httpie
-  jsontools
+  asdf
 )
 
 ZSH_DISABLE_COMPFIX=true

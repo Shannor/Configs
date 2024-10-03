@@ -1,5 +1,12 @@
 Plug 'machakann/vim-highlightedyank'
 Plug 'preservim/nerdtree'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
 
 source ~/.vimrc
 set timeoutlen=100000
@@ -49,6 +56,7 @@ nmap <leader>g <Action>(GotoSuperMethod)
 nmap <leader>i <Action>(RefactoringMenu)
 nmap <leader>o <Action>(ShowErrorDescription)
 nmap <leader>ai <Action>(ShowIntentionActions)
+nmap <leader>r <Action>(ReformatCode)
 
 " Switching tabs, use Idea mappings for this instead Ctrl + Shift + < / > or the arrow keys
 nmap <leader>[ <Action>(PreviousTab)
