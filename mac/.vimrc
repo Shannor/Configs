@@ -1,7 +1,4 @@
-set surround
-set which-key
-
-set timeoutlen = 7000
+set timeoutlen=7000
 
 inoremap jk <ESC>
 let mapleader = ","
