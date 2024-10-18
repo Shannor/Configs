@@ -1,18 +1,16 @@
 Plug 'machakann/vim-highlightedyank'
 Plug 'preservim/nerdtree'
-" Commentary plugin
 Plug 'tpope/vim-commentary'
 
+source ~/.vimrc
 "" -- Suggested options --
 " Show a few lines of context around the cursor. Note that this makes the
 " text scroll if you mouse-click near the start or end of the window.
 set scrolloff=5
-
-source ~/.vimrc
 set timeoutlen=100000
 set surround
-
 set multicursor
+
 " Quick hand for placing cursors after a search
 map q <Plug>(multicursor-ms/)
 map z <Plug>(multicursor-mcv)
@@ -25,7 +23,6 @@ let mapleader = ","
 set easymotion
 "Search for chars in single line
 nmap s <Plug>(easymotion-sl)
-
 
 nmap <leader>ne :NERDTree<cr>
 
@@ -64,6 +61,8 @@ nmap <leader>] <Action>(NextTab)
 
 " See file in tree view
 nmap <leader>f <Action>(SelectInProjectView)
+" Hide tab
+nmap <leader>h <Action>(HideActiveWindow)
 
 " Relies on TabShifter plugin to be installed, Only changes focus
 nmap <C-j> <Action>(TabShiftActions.MoveFocusDown)
@@ -78,4 +77,5 @@ nmap <leader>l <Action>(TabShiftActions.ShiftRight)
 
 " AI short cuts
 nmap <leader>k <Action>(Vcs.LLMCommitMessageAction)
+
 
