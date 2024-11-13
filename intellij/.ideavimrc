@@ -1,24 +1,22 @@
 Plug 'machakann/vim-highlightedyank'
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-commentary'
+Plug 'terryma/vim-multiple-cursors'
 
 source ~/.vimrc
 "" -- Suggested options --
 " Show a few lines of context around the cursor. Note that this makes the
 " text scroll if you mouse-click near the start or end of the window.
 set scrolloff=5
-set timeoutlen=100000
+set notimeout
 set surround
-set multicursor
+" Needs to be installed
+set which-key
 
-" Quick hand for placing cursors after a search
-" Relies on https://plugins.jetbrains.com/plugin/19162-ideavimmulticursor being installed
-map q <Plug>(multicursor-mc/)
-map z <Plug>(multicursor-mc0)
+let mapleader = ","
 
 imap jk <Esc>
 
-let mapleader = ","
 " <leader><leader> to activate
 set easymotion
 "Search for chars in single line
@@ -37,6 +35,7 @@ inoremap <left> <op>
 inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
+
 
 " IDE implementation flows, glance view, implementation, then interface
 nmap <leader>u <Action>(ShowHoverInfo)
@@ -74,4 +73,18 @@ nmap <leader>l <Action>(TabShiftActions.ShiftRight)
 " AI short cuts
 nmap <leader>co <Action>(Vcs.LLMCommitMessageAction)
 
+" Remap multiple-cursors shortcuts to match terryma/vim-multiple-cursors
+nmap <C-n> <Plug>NextWholeOccurrence
+xmap <C-n> <Plug>NextWholeOccurrence
+nmap g<C-n> <Plug>NextOccurrence
+xmap g<C-n> <Plug>NextOccurrence
+xmap <C-x> <Plug>SkipOccurrence
+xmap <C-p> <Plug>RemoveOccurrence
 
+" Note that the default <A-n> and g<A-n> shortcuts don't work on Mac due to dead keys.
+" <A-n> is used to enter accented text e.g. ñ
+" Feel free to pick your own mappings that are not affected. I like to use <leader>
+nmap <leader><C-n> <Plug>AllWholeOccurrences
+xmap <leader><C-n> <Plug>AllWholeOccurrences
+nmap <leader>g<C-n> <Plug>AllOccurrences
+xmap <leader>g<C-n> <Plug>AllOccurrences
