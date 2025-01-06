@@ -58,11 +58,11 @@ nmap <leader>f <Action>(SelectInProjectView)
 " Hide tab
 nmap <leader>h <Action>(HideActiveWindow)
 
-" Relies on TabShifter plugin to be installed, Only changes focus
-nmap <leader><leader>h <Action>(TabShiftActions.MoveFocusLeft)
-nmap <leader><leader>j <Action>(TabShiftActions.MoveFocusDown)
-nmap <leader><leader>k <Action>(TabShiftActions.MoveFocusUp)
-nmap <leader><leader>l <Action>(TabShiftActions.MoveFocusRight)
+" Relies on TabShifter plugin to be installed, Changes focus of cursor
+nmap <C-h> <Action>(TabShiftActions.MoveFocusLeft)
+nmap <C-j> <Action>(TabShiftActions.MoveFocusDown)
+nmap <C-k> <Action>(TabShiftActions.MoveFocusUp)
+nmap <C-l> <Action>(TabShiftActions.MoveFocusRight)
 
 " Relies on TabShifter and splits screens
 nmap <leader>h <Action>(TabShiftActions.ShiftLeft)
