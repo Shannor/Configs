@@ -45,8 +45,10 @@ nmap <leader>g <Action>(GotoSuperMethod)
 
 " Menu helpers
 nmap <leader>i <Action>(RefactoringMenu)
-nmap <leader>o <Action>(ShowErrorDescription)
-nmap <leader>ai <Action>(ShowIntentionActions)
+map <leader>o <Action>(ShowErrorDescription)
+" Pulls up prompt to use a generator
+vmap <leader>ai <Action>(AIAssistant.Editor.AskAiAssistantInEditor)
+nmap <leader>ai <Action>(AIAssistant.Editor.AskAiAssistantInEditor)
 nmap <leader>r <Action>(ReformatCode)
 
 " Switching tabs, use Idea mappings for this instead Ctrl + Shift + < / > or the arrow keys
