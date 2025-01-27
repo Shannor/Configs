@@ -23,6 +23,10 @@ set easymotion
 nmap s <Plug>(easymotion-sl)
 
 nmap <leader>ne :NERDTree<cr>
+" See file in tree view
+nmap <leader>nf <Action>(SelectInProjectView)
+" Hide tab
+nmap <leader>nh <Action>(HideActiveWindow)
 
 " Stop bad habits with arrow keys
 nnoremap <up> <nop>
@@ -36,6 +40,10 @@ inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
+" Screen adjustments
+nmap <leader>vz <Action>(ToggleZenMode)
+nmap <leader>vf <Action>(ToggleFullScreen)
+nmap <leader>vp <Action>(TogglePresentationMode)
 
 " IDE implementation flows, glance view, implementation, then interface
 nmap <leader>u <Action>(ShowHoverInfo)
@@ -55,10 +63,6 @@ nmap <leader>r <Action>(ReformatCode)
 nmap <leader>[ <Action>(PreviousTab)
 nmap <leader>] <Action>(NextTab)
 
-" See file in tree view
-nmap <leader>f <Action>(SelectInProjectView)
-" Hide tab
-nmap <leader>h <Action>(HideActiveWindow)
 
 " Relies on TabShifter plugin to be installed, Changes focus of cursor
 nmap <C-h> <Action>(TabShiftActions.MoveFocusLeft)
@@ -90,3 +94,4 @@ nmap <leader><C-n> <Plug>AllWholeOccurrences
 xmap <leader><C-n> <Plug>AllWholeOccurrences
 nmap <leader>g<C-n> <Plug>AllOccurrences
 xmap <leader>g<C-n> <Plug>AllOccurrences
+
