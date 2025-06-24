@@ -12,23 +12,21 @@ set notimeout
 set surround
 set ideajoin
 
-" Needs to be installed
+" Needs to be installed by Plugin System
 set which-key
 
 let mapleader = ","
 
 imap jk <Esc>
 
-" <leader><leader> to activate
+" <leader><leader> to activate, i.e. Press ",," then easymotion command
 set easymotion
 "Search for chars in single line
 nmap s <Plug>(easymotion-sl)
 
 nmap <leader>ne :NERDTree<cr>
-" See file in tree view
+" See current file tree view
 nmap <leader>nf <Action>(SelectInProjectView)
-" Hide tab
-nmap <leader>nh <Action>(HideActiveWindow)
 
 " Stop bad habits with arrow keys
 nnoremap j gj
@@ -39,6 +37,10 @@ nmap <leader>vz <Action>(ToggleZenMode)
 nmap <leader>vf <Action>(ToggleFullScreen)
 nmap <leader>vp <Action>(TogglePresentationMode)
 
+"Toolbar Commands
+nmap <leader>tt <Action>(ActivateTerminalToolWindow)
+nmap <leader>th <Action>(HideActiveWindow)
+
 " IDE implementation flows, glance view, implementation, then interface
 nmap <leader>u <Action>(ShowHoverInfo)
 nmap <leader>y <Action>(QuickImplementations)
@@ -46,21 +48,17 @@ nmap <leader>b <Action>(GotoImplementation)
 nmap <leader>g <Action>(GotoSuperMethod)
 
 " IDE refactor common cases
-nmap <leader>re <Action>(RenameElement)
-nmap <leader>rc <Action>(ReformatCode)
-nmap <leader>ri <Action>(Inline)
+map <leader>rm <Action>(RefactoringMenu)
+map <leader>re <Action>(RenameElement)
+map <leader>rc <Action>(ReformatCode)
+map <leader>ri <Action>(Inline)
 
 " Menu helpers
-nmap <leader>i <Action>(RefactoringMenu)
-map <leader>e <Action>(ShowErrorDescription)
+nmap <leader>e <Action>(ShowErrorDescription)
+
 " Pulls up prompt to use a generator
 vmap <leader>ai <Action>(AIAssistant.Editor.AskAiAssistantInEditor)
 nmap <leader>ai <Action>(AIAssistant.Editor.AskAiAssistantInEditor)
-
-" Switching tabs, use Idea mappings for this instead Ctrl + Shift + < / > or the arrow keys
-nmap <leader>[ <Action>(PreviousTab)
-nmap <leader>] <Action>(NextTab)
-
 
 " Relies on TabShifter plugin to be installed, Changes focus of cursor
 nmap <C-h> <Action>(TabShiftActions.MoveFocusLeft)
@@ -68,7 +66,7 @@ nmap <C-j> <Action>(TabShiftActions.MoveFocusDown)
 nmap <C-k> <Action>(TabShiftActions.MoveFocusUp)
 nmap <C-l> <Action>(TabShiftActions.MoveFocusRight)
 
-" Relies on TabShifter and splits screens
+" Relies on TabShifter and splits screens in the direction
 nmap <leader>h <Action>(TabShiftActions.ShiftLeft)
 nmap <leader>j <Action>(TabShiftActions.ShiftDown)
 nmap <leader>k <Action>(TabShiftActions.ShiftUp)
