@@ -12,6 +12,7 @@ set notimeout
 set surround
 set ideajoin
 
+set functiontextobj
 " Needs to be installed by Plugin System
 set which-key
 
@@ -53,12 +54,23 @@ map <leader>re <Action>(RenameElement)
 map <leader>rc <Action>(ReformatCode)
 map <leader>ri <Action>(Inline)
 
+map <leader>rfu <Action>(FindUsages)
+map <leader>rff <Action>(FindUsagesInFile)
+
+
 " Menu helpers
 nmap <leader>e <Action>(ShowErrorDescription)
 
 " Pulls up prompt to use a generator
 vmap <leader>ai <Action>(AIAssistant.Editor.AskAiAssistantInEditor)
 nmap <leader>ai <Action>(AIAssistant.Editor.AskAiAssistantInEditor)
+
+" IDE Tab Helpers
+nmap <leader>cl <Action>(CloseAllToTheLeft)
+nmap <leader>cr <Action>(CloseAllToTheRight)
+nmap <leader>ca <Action>(CloseAllEditors)
+nmap <leader>cu <Action>(CloseAllUnmodifiedEditors)
+nmap <leader>rt <Action>(ReopenClosedTab)
 
 " Relies on TabShifter plugin to be installed, Changes focus of cursor
 nmap <C-h> <Action>(TabShiftActions.MoveFocusLeft)
