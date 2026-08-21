@@ -38,6 +38,10 @@ nmap <leader>vz <Action>(ToggleZenMode)
 nmap <leader>vf <Action>(ToggleFullScreen)
 nmap <leader>vp <Action>(TogglePresentationMode)
 
+" Window Adjustments
+
+nmap <leader>maw <Action>(MergeAllWindowsAction)
+
 "Toolbar Commands
 nmap <leader>tt <Action>(ActivateTerminalToolWindow)
 nmap <leader>th <Action>(HideActiveWindow)

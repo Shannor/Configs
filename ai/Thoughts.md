@@ -30,6 +30,8 @@ _As of 2026/04/03_
   - Used only for planning, architecture and creating tickets.
 - Qwen3 Coder 30B (local)
   - Used for implementation
+  - Requires a lot of hand holding as it doesn't have any reasoning. This can lead to it building exactly what it 
+    reads, but leads to a lot of (simple & complex) bugs to clean up. 
 - GLM 4.7 Flash (local)
   - Used for implementation or planning and architecture
 
@@ -39,7 +41,7 @@ _As of 2026/04/03_
 
 - npm:pi-prompt-template-model
 - npm:pi-subagents
-- Custom Extension for [ LM Studio ](extensions/lmStudio.ts)
+- Custom Extension for [ LM Studio ](./pi/extensions/lmstudio.ts)
 
 ----
 
