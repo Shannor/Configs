@@ -19,11 +19,12 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 # chsh -s $(which zsh)
 # git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
-# Scala needs Java first
 
 brew cask install alfred
-brew cask install docker
-brew cask install iterm2
-brew cask install insomnia
+
+# Tools that might now have Brew
+# AltTab
+# Homerow
+# satt, my personal CLI for fun stuff.
 
 brew cleanup
