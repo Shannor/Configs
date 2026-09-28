@@ -11,10 +11,12 @@ set scrolloff=5
 set notimeout
 set surround
 set ideajoin
-
 set functiontextobj
 " Needs to be installed by Plugin System
 set which-key
+" Needs to be install by Flash plugin
+nmap s <Action>(flash.search)
+xmap s <Action>(flash.search)
 
 let mapleader = ","
 
@@ -22,8 +24,6 @@ imap jk <Esc>
 
 " <leader><leader> to activate, i.e. Press ",," then easymotion command
 set easymotion
-"Search for chars in single line
-nmap s <Plug>(easymotion-sl)
 
 nmap <leader>ne :NERDTree<cr>
 " See current file tree view
