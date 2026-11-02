@@ -5,12 +5,8 @@
 brew update
 brew doctor
 
-# Replacement for curl
-brew install httpie
 # Helps read JSON data
 brew install jq
-brew install golang
-brew install git
 
 # Setup for zsh and themes
 cp .zshrc $HOME/.zshrc

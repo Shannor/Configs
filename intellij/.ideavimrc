@@ -1,7 +1,7 @@
 Plug 'machakann/vim-highlightedyank'
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-commentary'
-Plug 'terryma/vim-multiple-cursors'
+Plug 'mg979/vim-visual-multi'
 
 source ~/.vimrc
 "" -- Suggested options --
@@ -12,11 +12,34 @@ set notimeout
 set surround
 set ideajoin
 set functiontextobj
+
 " Needs to be installed by Plugin System
 set which-key
 " Needs to be install by Flash plugin
 nmap s <Action>(flash.search)
 xmap s <Action>(flash.search)
+
+" enhance vim f (find for char in characters to the right of the current cursor)
+nmap f <Action>(flash.find)
+xmap f <Action>(flash.find)
+" enhance vim F (find for char in characters to the left of the current cursor)
+nmap F <Action>(flash.find_backward)
+xmap F <Action>(flash.find_backward)
+" enhance vim t (till for char in characters to the right of the current cursor)
+nmap t <Action>(flash.till)
+xmap t <Action>(flash.till)
+" enhance vim T (till for char in characters to the left of the current cursor)
+nmap T <Action>(flash.till_backward)
+xmap T <Action>(flash.till_backward)
+" enhance vim ; (Repeat the last f/F/t/T search)
+nmap ; <Action>(flash.repeat)
+xmap ; <Action>(flash.repeat)
+" enhance vim , (Repeat the last f/F/t/T search backward)
+nmap , <Action>(flash.repeat_backward)
+xmap , <Action>(flash.repeat_backward)
+
+set ideaeditor+=chat   " Vim keys in the AI chat input
+set ideaeditor+=main   " ... and in plugin-provided editor tabs
 
 let mapleader = ","
 
@@ -32,12 +55,6 @@ nmap <leader>nf <Action>(SelectInProjectView)
 " Stop bad habits with arrow keys
 nnoremap j gj
 nnoremap k gk
-
-" Screen adjustments
-nmap <leader>vz <Action>(ToggleZenMode)
-nmap <leader>vf <Action>(ToggleFullScreen)
-nmap <leader>vp <Action>(TogglePresentationMode)
-
 " Window Adjustments
 
 nmap <leader>maw <Action>(MergeAllWindowsAction)
@@ -64,11 +81,6 @@ map <leader>rff <Action>(FindUsagesInFile)
 
 " Menu helpers
 nmap <leader>e <Action>(ShowErrorDescription)
-
-" Pulls up prompt to use a generator
-vmap <leader>ai <Action>(AIAssistant.Editor.AskAiAssistantInEditor)
-nmap <leader>ai <Action>(AIAssistant.Editor.AskAiAssistantInEditor)
-
 " IDE Tab Helpers
 nmap <leader>cl <Action>(CloseAllToTheLeft)
 nmap <leader>cr <Action>(CloseAllToTheRight)
@@ -87,23 +99,3 @@ nmap <leader>h <Action>(TabShiftActions.ShiftLeft)
 nmap <leader>j <Action>(TabShiftActions.ShiftDown)
 nmap <leader>k <Action>(TabShiftActions.ShiftUp)
 nmap <leader>l <Action>(TabShiftActions.ShiftRight)
-
-" AI short cuts
-nmap <leader>co <Action>(Vcs.LLMCommitMessageAction)
-
-" Remap multiple-cursors shortcuts to match terryma/vim-multiple-cursors
-nmap <C-n> <Plug>NextWholeOccurrence
-xmap <C-n> <Plug>NextWholeOccurrence
-nmap g<C-n> <Plug>NextOccurrence
-xmap g<C-n> <Plug>NextOccurrence
-xmap <C-x> <Plug>SkipOccurrence
-xmap <C-p> <Plug>RemoveOccurrence
-
-" Note that the default <A-n> and g<A-n> shortcuts don't work on Mac due to dead keys.
-" <A-n> is used to enter accented text e.g. ñ
-" Feel free to pick your own mappings that are not affected. I like to use <leader>
-nmap <leader><C-n> <Plug>AllWholeOccurrences
-xmap <leader><C-n> <Plug>AllWholeOccurrences
-nmap <leader>g<C-n> <Plug>AllOccurrences
-xmap <leader>g<C-n> <Plug>AllOccurrences
-
