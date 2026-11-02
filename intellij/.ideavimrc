@@ -11,7 +11,7 @@ set scrolloff=5
 set notimeout
 set surround
 set ideajoin
-set functiontextobj
+set anyobject
 
 " Needs to be installed by Plugin System
 set which-key
