@@ -1,6 +1,7 @@
 ---
+name: make-pr
 thinking: low
-mdoel: claude-sonnet-4-6
+model: claude-sonnet-4-6
 description: >
   Squashes feature/bugfix branch commits into a single meaningful commit and creates a PR with a 
   comprehensive title and description. Use when the user says "make pr", "create pr", "squash and pr",

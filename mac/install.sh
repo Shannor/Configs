@@ -24,3 +24,7 @@ brew cask install alfred
 # satt, my personal CLI for fun stuff.
 
 brew cleanup
+
+# Setup AI agent skills
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+"$SCRIPT_DIR/../ai/setup-skills.sh"
