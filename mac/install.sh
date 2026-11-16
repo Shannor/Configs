@@ -8,10 +8,14 @@ brew doctor
 # Helps read JSON data
 brew install jq
 
+# Git worktree manager (wt)
+brew install worktrunk
+
 # Setup for zsh and themes
 cp .zshrc $HOME/.zshrc
 brew install zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+wt config shell install --yes zsh
 # chsh -s $(which zsh)
 # git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
