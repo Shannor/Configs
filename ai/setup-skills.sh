@@ -2,35 +2,41 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SOURCE_DIR="$SCRIPT_DIR/pi/skills"
+SOURCE_DIR="$SCRIPT_DIR/skills"
+OVERRIDES_DIR="$SCRIPT_DIR/overrides"
 HUB_DIR="$HOME/.agents/skills"
 
 DRY_RUN=0
 FORCE=0
 
+# Targets are "agent:skills-dir". The agent name selects per-agent overrides in
+# overrides/<agent>/skills/<skill>, which replace the shared skill for that agent only.
 SYMLINK_TARGETS=(
-  "$HOME/.claude/skills"
-  "$HOME/.codex/skills"
-  "$HOME/.pi/skills"
-  "$HOME/.pi/agent/skills"
+  "claude:$HOME/.claude/skills"
+  "codex:$HOME/.codex/skills"
+  "pi:$HOME/.pi/skills"
+  "pi:$HOME/.pi/agent/skills"
+  "copilot:$HOME/.copilot/skills"
 )
 
 if [ -d "$HOME/.config/opencode" ]; then
-  SYMLINK_TARGETS+=("$HOME/.config/opencode/skills")
+  SYMLINK_TARGETS+=("opencode:$HOME/.config/opencode/skills")
 fi
 
-# Antigravity / Gemini CLI traverse directories without following symlinked skill folders.
+# Antigravity (agy) traverses directories without following symlinked skill folders.
 COPY_TARGETS=(
-  "$HOME/.gemini/antigravity-cli/skills"
-  "$HOME/.gemini/config/skills"
+  "agy:$HOME/.gemini/antigravity-cli/skills"
+  "agy:$HOME/.gemini/config/skills"
 )
 
 usage() {
   cat <<EOF
 Usage: $(basename "$0") [OPTIONS]
 
-Sync custom skills from this repo to ~/.agents/skills/ (preserving third-party
-skills installed there), then symlink/copy all skills to supported AI agents.
+Sync shared skills (ai/skills) to ~/.agents/skills/ (preserving third-party
+skills installed there), then symlink/copy all skills to supported AI agents
+(Claude, Codex, Pi, Copilot CLI, OpenCode, Antigravity). Per-agent overrides in
+ai/overrides/<agent>/skills/<skill> replace the shared skill for that agent.
 
 Options:
   -n, --dry-run   Show changes without modifying files
@@ -113,7 +119,7 @@ prune_broken_links() {
     if [ ! -e "$entry" ]; then
       link_target="$(readlink "$entry")"
       case "$link_target" in
-        "$HUB_DIR"/*)
+        "$HUB_DIR"/*|"$OVERRIDES_DIR"/*)
           log "prune broken symlink: $entry -> $link_target"
           if [ "$DRY_RUN" -eq 0 ]; then
             rm "$entry"
@@ -124,18 +130,53 @@ prune_broken_links() {
   done
 }
 
+override_path() {
+  local agent="$1"
+  local skill_name="$2"
+  local path="$OVERRIDES_DIR/$agent/skills/$skill_name"
+  if [ -f "$path/SKILL.md" ]; then
+    printf '%s' "$path"
+  fi
+}
+
 propagate_skill() {
   local skill_name="$1"
   local hub_path="$2"
   local copy_src="${3:-$hub_path}"
-  local target_dir
+  local entry agent target_dir override
 
-  for target_dir in "${SYMLINK_TARGETS[@]}"; do
-    link_skill "$hub_path" "$target_dir/$skill_name"
+  for entry in "${SYMLINK_TARGETS[@]}"; do
+    agent="${entry%%:*}"
+    target_dir="${entry#*:}"
+    override="$(override_path "$agent" "$skill_name")"
+    link_skill "${override:-$hub_path}" "$target_dir/$skill_name"
   done
 
-  for target_dir in "${COPY_TARGETS[@]}"; do
-    sync_dir "$copy_src" "$target_dir/$skill_name"
+  for entry in "${COPY_TARGETS[@]}"; do
+    agent="${entry%%:*}"
+    target_dir="${entry#*:}"
+    override="$(override_path "$agent" "$skill_name")"
+    sync_dir "${override:-$copy_src}" "$target_dir/$skill_name"
+  done
+}
+
+# Skills that exist only as an agent override (no shared version).
+propagate_override_only() {
+  local entry agent target_dir skill_dir skill_name
+
+  for entry in "${SYMLINK_TARGETS[@]}" "${COPY_TARGETS[@]}"; do
+    agent="${entry%%:*}"
+    target_dir="${entry#*:}"
+    for skill_dir in "$OVERRIDES_DIR/$agent/skills"/*; do
+      [ -d "$skill_dir" ] && [ -f "$skill_dir/SKILL.md" ] || continue
+      skill_name="$(basename "$skill_dir")"
+      [ -f "$SOURCE_DIR/$skill_name/SKILL.md" ] && continue
+      if printf '%s\n' "${COPY_TARGETS[@]}" | grep -qxF "$entry"; then
+        sync_dir "$skill_dir" "$target_dir/$skill_name"
+      else
+        link_skill "$skill_dir" "$target_dir/$skill_name"
+      fi
+    done
   done
 }
 
@@ -167,8 +208,8 @@ fi
 
 if [ "$DRY_RUN" -eq 0 ]; then
   mkdir -p "$HUB_DIR"
-  for target_dir in "${SYMLINK_TARGETS[@]}" "${COPY_TARGETS[@]}"; do
-    mkdir -p "$target_dir"
+  for entry in "${SYMLINK_TARGETS[@]}" "${COPY_TARGETS[@]}"; do
+    mkdir -p "${entry#*:}"
   done
 fi
 
@@ -178,8 +219,8 @@ for skill_dir in "$SOURCE_DIR"/*; do
   sync_dir "$skill_dir" "$HUB_DIR/$skill_name"
 done
 
-for target_dir in "${SYMLINK_TARGETS[@]}"; do
-  prune_broken_links "$target_dir"
+for entry in "${SYMLINK_TARGETS[@]}"; do
+  prune_broken_links "${entry#*:}"
 done
 
 for skill_dir in "$HUB_DIR"/*; do
@@ -192,6 +233,8 @@ for skill_dir in "$HUB_DIR"/*; do
     propagate_skill "$skill_name" "$skill_dir"
   fi
 done
+
+propagate_override_only
 
 if [ "$DRY_RUN" -eq 1 ]; then
   for skill_dir in "$SOURCE_DIR"/*; do

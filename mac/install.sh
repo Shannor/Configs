@@ -29,6 +29,16 @@ brew cask install alfred
 
 brew cleanup
 
+# Node is managed with asdf; global npm CLIs must be installed through it
+brew install asdf
+asdf plugin add nodejs 2>/dev/null || true
+asdf install nodejs latest:22
+asdf set --home nodejs latest:22 2>/dev/null || asdf global nodejs latest:22
+
+# Cloudflare CLI (beta), used by the cloudflare-cli skill
+npm i -g cf
+asdf reshim nodejs
+
 # Setup AI agent skills
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 "$SCRIPT_DIR/../ai/setup-skills.sh"
