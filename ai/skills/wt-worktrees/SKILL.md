@@ -19,6 +19,13 @@ The `wt` CLI manages parallel Git worktrees, letting you work on multiple branch
 wt --version
 ```
 
+## Worktree Location Convention (Sibling Directories Only)
+
+Always use `wt`'s sibling directory layout (`{{ repo_path }}/../{{ repo }}.{{ branch | sanitize }}`):
+
+- **Never nest worktrees inside the repository** (do **not** use `--path .worktrees/...` or set `worktree-path` to `.worktrees/...`).
+- **Why:** IntelliJ IDEA and JetBrains Air require worktrees to live outside the main project root so they appear naturally in **Git → Worktrees** and **Agent Sessions**, support Air's **Review Code** diff workflow, and avoid duplicate file indexing in the main project.
+
 ## Core Workflow for Stacked Branches
 
 ### 1. List All Worktrees
