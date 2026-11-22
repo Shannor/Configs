@@ -100,25 +100,32 @@ git fetch origin <source-branch> <dest-branch>
 
 **RULE: Do NOT post any comments or modify local files during Phase 2.**
 
-Evaluate the changes across five dimensions:
+**Specialized Review Skills**:
+- **Backend / Service Architecture**: Read and apply the **`hexagonal-architecture`** skill (`../hexagonal-architecture/SKILL.md`) when reviewing backend services, handlers, or repositories (Ports & Adapters boundaries, service-owned orchestration, plain value domain models over transport/DB DTO leakage, consumer-defined driven ports, and incremental Boy-Scout boundary hygiene).
+- **Go (`.go` files in diff)**: Read and apply the **`golang-review`** skill (`../golang-review/SKILL.md`) to enforce idiomatic Go over Java/TypeScript patterns, Garbage Collector & pointer discipline (`[]T` over `[]*T`, avoiding unnecessary `*string`/value pointers), and `O(n^2)` / N+1 complexity checks.
+
+Evaluate the changes across six dimensions:
 
 1. **Correctness, Bugs & Edge Cases**
    - Unhandled errors, nil pointer dereferences, slice/map bounds, concurrency races, resource/goroutine leaks.
    - Partial failure states, transaction rollbacks, idempotency on retries, pagination/limit edge cases.
-   - Database query correctness (N+1 queries, missing indexes on new filters, GORM v2 pitfalls, zero-value updates, soft-delete handling).
-2. **Architecture & Project Conventions**
-   - Package boundaries and dependency direction (e.g., services never importing other services; boundary orchestration in handlers/cron).
-   - DAO contracts (DAOs accepting scalars or dedicated input structs rather than raw ORM models; returning typed not-found sentinels).
-   - API conventions (OpenAPI spec-first generation, status code mapping, converters in `converter/` rather than inline in handlers).
-   - Observability & logging (canonical log rules, `xlog.Fields` camelCase keys, no PII, proper layer group names, no error-group logging inside services/DAOs).
+   - Database query correctness (N+1 queries, missing indexes on new filters, GORM v2 / Firestore pitfalls, zero-value updates, soft-delete handling).
+2. **Performance, Complexity & Memory Efficiency**
+   - Algorithmic complexity traps (`O(n^2)` nested linear scans instead of `O(n + m)` map lookups, string `+=` in loops, repeated slice shifting/sorting in loops, N+1 I/O).
+   - Memory & GC pressure (unnecessary pointer indirection/heap escapes, `[]*T` vs `[]T`, missing slice/map capacity pre-allocation).
+3. **Architecture, Idioms & Project Conventions**
+   - Hexagonal / Ports & Adapters boundaries: inward dependency direction, business orchestration in Application Services (not HTTP handlers), plain value domain structs (not leaking HTTP `api.*` or vendor DTOs into core services), and narrow consumer-defined driven ports (`Store` / `Gateway`) returning domain sentinel errors.
+   - Language-idiomatic design (e.g., idiomatic Go rather than Java/TypeScript abstractions).
+   - API & Adapter conventions (OpenAPI spec-first generation, status code mapping, explicit converters between transport/DB DTOs and domain models).
+   - Observability & logging (canonical log rules, `xlog.Fields` / `clog.Fields` camelCase keys, no PII, proper layer group names, no error-group logging inside services/DAOs).
    - Code style (decomposed helper methods over inline narrative comments).
-3. **Security & Authorization**
+4. **Security & Authorization**
    - Tenant/promoter isolation and `actor` scoping (`AuthorizedByUser` / `resolveUserID`).
    - Auth bypass risks, unvalidated external input, SQL injection in raw queries, secret exposure.
-4. **Tests & Verification**
+5. **Tests & Verification**
    - Are happy paths, failure paths, and authorization boundaries tested?
    - Do tests assert meaningful behavior rather than tautologies?
-5. **Alignment with Ticket / Scope**
+6. **Alignment with Ticket / Scope**
    - Does the implementation fulfill the ticket's acceptance criteria?
    - Are migrations, config changes, or backwards-compatibility concerns accounted for?
 
