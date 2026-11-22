@@ -163,3 +163,19 @@ Uses the local `@playwright/cli` package installed in `package.json`. Writes ful
 ./node_modules/.bin/playwright-cli close
 rm -rf .playwright-cli
 ```
+
+---
+
+## 6. Embedding Screenshots in Markdown Artifacts (No `carousel`)
+
+When presenting screenshots in Markdown artifacts or walkthroughs:
+1. **Never use ````carousel` blocks or `<!-- slide -->` comments** — standard Markdown readers render ````carousel` as a raw code block and hide the images.
+2. Save screenshots into the artifact directory alongside the `.md` file and embed them using **standard Markdown headings and relative `./<image>.png` paths**:
+   ```markdown
+   ### Before
+   ![Before mobile layout](./mobile_before.png)
+
+   ### After
+   ![After mobile layout](./mobile_after.png)
+   ```
+
