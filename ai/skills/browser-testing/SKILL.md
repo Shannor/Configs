@@ -27,6 +27,19 @@ This skill provides token-efficient workflows for testing web UIs in a real Chro
      - Google Chrome DevTools MCP CLI via `./node_modules/.bin/chrome-devtools`
      - Playwright CLI via `./node_modules/.bin/playwright-cli` (or `npx playwright-cli`)
 
+### Vercel Agent-Browser (`agent-browser`)
+
+Before installing Agent-Browser, check whether Node is managed by nvm or asdf. In the current shell, inspect `type -a nvm asdf`, `NVM_DIR` / `ASDF_DIR`, and `command -v node`; paths under `~/.nvm/` or `~/.asdf/shims/` are further indicators. If nvm or asdf is in use, **do not use Homebrew**: its Agent-Browser formula also installs Homebrew's Node, creating a separate Node installation. Install the package with the project's existing package manager instead, preferably as a dev dependency in team projects, and follow the lockfile:
+
+| Project lockfile | Install command |
+| ------------------ | ----------------- |
+| `pnpm-lock.yaml` | `pnpm add -D agent-browser` |
+| `yarn.lock` | `yarn add -D agent-browser` |
+| `bun.lock` or `bun.lockb` | `bun add -d agent-browser` |
+| `package-lock.json` or no lockfile | `npm install -D agent-browser` |
+
+Use the project's package-manager runner to invoke the local `agent-browser` binary. If a global install is specifically needed while using nvm/asdf, install into the active Node version with `npm install -g agent-browser` (or the active manager's supported global-install command). Consider Homebrew only when nvm/asdf is not in use and a separate Homebrew-managed Node installation is acceptable.
+
 ---
 
 ## 2. Task-Based Recommendation Guide (Choose the Right Tool for the Job)

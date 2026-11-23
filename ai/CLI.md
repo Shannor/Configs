@@ -14,7 +14,7 @@ IDEs are starting to add support for this natively, but it feels better to use t
 
 ### [Agent-Browser](https://github.com/vercel-labs/agent-browser)
 
-> I installed globally, but in a team setting it should be in the package.json
+Before installing, check whether Node is managed by nvm or asdf. If so, install Agent-Browser with the project's Node package manager instead of Homebrew; the Homebrew formula also installs Homebrew's Node. Prefer adding it to `package.json` in team projects, using the existing lockfile to choose npm, pnpm, Yarn, or Bun. See the [browser-testing skill](skills/browser-testing/SKILL.md) for the detection and install steps.
 
 ## Nice to haves
 
