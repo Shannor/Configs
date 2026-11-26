@@ -1,7 +1,7 @@
 ---
 name: implement-ticket
 description: >
-  End-to-end workflow for implementing a GitHub issue or Jira ticket: (1) create an isolated
+  End-to-end workflow for implementing a YouTrack or Jira ticket: (1) create an isolated
   Git worktree from main using the `wt` (Worktrunk) CLI, (2) implement and test the changes
   and add a user-centric changelog entry, (3) spin up the local dev server on the worktree's
   port, share preview URLs along with the specific user(s)/routes that showcase the feature,
@@ -11,7 +11,7 @@ description: >
 
 # Implement Ticket Workflow
 
-Follow this workflow whenever implementing a GitHub issue or Jira ticket so that `main` stays clean, every ticket runs on its own isolated Worktrunk (`wt`) worktree and port, `app/data/changelog.ts` is kept up to date, the user gets an immediate preview URL with demo user context to review, and a Pull Request is ready for the review phase.
+Follow this workflow whenever implementing a YouTrack (`OT-*`) or Jira (`EX-*`) ticket so that `main` stays clean, every ticket runs on its own isolated Worktrunk (`wt`) worktree and port, `app/data/changelog.ts` is kept up to date, the user gets an immediate preview URL with demo user context to review, and a Pull Request is ready for the review phase.
 
 ---
 
@@ -30,8 +30,8 @@ Follow this workflow whenever implementing a GitHub issue or Jira ticket so that
      /opt/homebrew/bin/wt switch --create <type>/<short-ticket-slug> --base=^
      ```
      Examples:
-     - `/opt/homebrew/bin/wt switch --create feat/issue-38-copy-dim-query --base=^`
-     - `/opt/homebrew/bin/wt switch --create fix/issue-42-session-filter --base=^`
+     - `/opt/homebrew/bin/wt switch --create feat/ot-5-open-in-dim --base=^`
+     - `/opt/homebrew/bin/wt switch --create fix/ot-16-mid-session-comp --base=^`
    - Run all subsequent file edits and commands inside the sibling worktree directory (`$WT_WORKTREE` or `../<repo>.<type>-<short-ticket-slug>`), or open the agent session directly in that worktree in JetBrains Air.
    - **If changes were already started on `main`**:
      - Copy/apply the modified and untracked files to the new worktree directory, then reset `main` (`git checkout -- .` and remove untracked ticket files on `main`) so `main` remains pristine.
@@ -40,8 +40,13 @@ Follow this workflow whenever implementing a GitHub issue or Jira ticket so that
 
 ## Step 2: Implement Changes, Update Changelog & Run Automated Checks
 
-1. **Understand the Ticket**:
-   - Read the issue/ticket details thoroughly (`gh issue view <number>` for GitHub issues, or `/opt/homebrew/bin/jira` via the `jira-cli` skill for Jira tickets).
+1. **Understand the Ticket & Move Board Stage**:
+   - Read the ticket details and comments thoroughly:
+     - **YouTrack (`OT-*` tickets)**: Use `/opt/homebrew/bin/youtrack issue view <TICKET-ID> --comments 10` and `youtrack issue link list <TICKET-ID>` (see the `youtrack-cli` skill). Move the ticket's Kanban `Stage` to `In Progress`:
+       ```bash
+       /opt/homebrew/bin/youtrack issue field set <TICKET-ID> Stage --value "In Progress"
+       ```
+     - **Jira (`EX-*` tickets)**: Use `/opt/homebrew/bin/jira issue view <TICKET-ID>` (see the `jira-cli` skill) and move to `In Progress` if applicable.
 2. **Implement & Test**:
    - Check the repository's `AGENTS.md` first, and apply relevant architecture/language skills:
      - **Backend / Service changes**: Follow the **`hexagonal-architecture`** skill (`../hexagonal-architecture/SKILL.md`) for Ports & Adapters boundaries, service-owned orchestration, plain value domain models, consumer-defined driven ports, and Boy-Scout migration rules.
@@ -65,8 +70,26 @@ Follow this workflow whenever implementing a GitHub issue or Jira ticket so that
      /opt/homebrew/bin/wt step eval '{{ branch | hash_port }}'
      ```
      *(Falls back to `5173` if not in a named branch).*
-2. **Start the Dev Server**:
-   - Launch `npm run dev` in the background inside the worktree directory and verify it is listening on `http://localhost:<port>`.
+2. **Start the Dev Server (Always Detached & Tethered)**:
+   - **Never** leave `npm run dev` attached to an agent shell task (background tasks hit the 600s command timeout, and plain `nohup ... &` is killed on process-group teardown).
+   - Always spawn the dev server in a **new detached session** wrapped with `/opt/homebrew/bin/wt step tether --` (`detached: true` + `stdio: ['ignore', out, out]` + `child.unref()`), write logs to `/tmp/<repo>-<port>-dev.log`, and poll `http://localhost:<port>` until it returns HTTP `200`. Tethering ensures Worktrunk automatically kills the entire dev server process tree when the worktree is removed (via `wt remove`, `wt step prune`, `git worktree remove`, or IDE deletion):
+     ```bash
+     node -e '
+     const { spawn } = require("node:child_process");
+     const fs = require("node:fs");
+     const out = fs.openSync("/tmp/dev-server-<port>.log", "w");
+     const child = spawn("/opt/homebrew/bin/wt", ["step", "tether", "--", "npm", "run", "dev"], {
+       cwd: process.cwd(),
+       detached: true,
+       stdio: ["ignore", out, out],
+       env: { ...process.env },
+     });
+     child.unref();
+     console.log("Spawned detached tethered dev server PID:", child.pid);
+     '
+     ```
+   - Verify in a follow-up check (`lsof -i :<port>` / `curl -s -o /dev/null -w "%{http_code}\n" http://localhost:<port>/`) that the detached server remained alive after the spawn command exited.
+   - *(Tip: Stop a detached server manually via `lsof -ti :<port> | xargs kill`, or let `wt remove` / `wt step prune` tear it down automatically.)*
 3. **Identify Demo User(s) & Deep Links That Showcase the Change**:
    - **CRITICAL RULE**: Always print the full, complete `http://localhost:<port>/...` URLs directly in your chat message for local runs **no matter what** (never omit the raw URLs or rely solely on artifact cards).
    - Provide the user with:
@@ -88,7 +111,7 @@ Follow this workflow whenever implementing a GitHub issue or Jira ticket so that
 1. **Stage & Commit**:
    - Follow the `git-commit` and `make-pr` skills.
    - Stage only the files belonging to the ticket, including `app/data/changelog.ts` (`git status` to verify no scratch artifacts are included).
-   - Commit with a clear message explaining the **why** and **what**, ending with `Closes #<issue-number>` (or `Closes: <TICKET_ID>`).
+   - Commit with a clear message explaining the **why** and **what**, including `<TICKET_ID>` in the subject (`feat(scope): summary (OT-12)`) and ending with `Closes: <TICKET_ID>`.
 2. **Push & Create PR**:
    - Push the worktree branch to `origin`:
      ```bash
@@ -98,6 +121,10 @@ Follow this workflow whenever implementing a GitHub issue or Jira ticket so that
      - **Summary** (what & why)
      - **Changes** (grouped by concern)
      - **How to Test** (including the local preview URL pattern and demo user steps)
-     - **Ticket reference** (`Closes #<issue-number>`)
+     - **Ticket reference** (`Closes <TICKET_ID>`, e.g. `Closes OT-12`)
+   - For YouTrack (`OT-*`) tickets, move the Kanban `Stage` to `In Review` once the PR is opened:
+     ```bash
+     /opt/homebrew/bin/youtrack issue field set <TICKET-ID> Stage --value "In Review"
+     ```
 3. **Hand Off for Review**:
    - Share the created PR link alongside the changelog entry and ask the user to review and kick off the PR review phase (`pr-review` / `pr-comments-review`).

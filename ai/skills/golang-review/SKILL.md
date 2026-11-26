@@ -35,6 +35,9 @@ Watch for habits carried over from OOP-heavy Java or functional/dynamic TypeScri
 - **Explicit Error Handling & Package Naming**:
   - Wrap errors with context (`fmt.Errorf("load profile %s: %w", id, err)`) and inspect via `errors.Is` / `errors.As` — never string-match `err.Error()` and never use `panic` for recoverable runtime/request failures.
   - Avoid catch-all packages (`util`, `utils`, `common`, `helpers`, `types`, `models`) and stuttering names (`user.UserConfig` -> `user.Config`).
+- **Return Results, Don't Mutate Caller Data (System Architecture Rule)**:
+  - **Anti-pattern**: Void helpers (`fillResults(out, ...)`, `populateMap(m, ...)`) or pointer-receiver domain mutators (`func (s *Session) EnableX(...)`) that silently mutate caller-owned slices, maps, or structs in place. In-place mutation hides data flow, couples helpers to caller buffer layouts, and makes side effects harder to reason about and test.
+  - **Our Standard**: Every function and domain helper **must return its result** (`results := buildResults(...)`, `ses = ses.WithCompTracking(...)`, `indexed := indexPlayers(base, players...)`) instead of mutating arguments passed in by the caller. Reserve pointer receivers strictly for stateful infrastructure/service/store instances (`*service`, `*Store`), non-copyable sync primitives, or proven benchmarked hot paths.
 - **Caller-Controlled Concurrency**:
   - **Anti-pattern (TypeScript `async` everywhere)**: Spawning hidden goroutines or returning channels from ordinary functions when synchronous execution suffices.
   - **Idiomatic Go**: Write synchronous functions by default and let the caller decide whether to run them concurrently. Always pass `ctx context.Context` as the first argument (never stored in a struct), bound concurrency (`errgroup.WithContext`), and guarantee goroutines have an exit path on cancellation.
@@ -154,6 +157,7 @@ Keep review comments constructive, specific, and proportional:
   - Unbounded `O(n^2)` loops or N+1 DB/network calls on user, inventory, or batch collections.
   - Nil-pointer dereference risks caused by pointer overuse, data races, goroutine leaks, copied `sync.Mutex`, or swallowed errors.
 - **[Suggestion]**:
+  - Functions or domain helpers that mutate caller-supplied slices, maps, or structs in place instead of returning new/updated values.
   - Unnecessary `[]*T` or `*SmallStruct` / `*string` usage that increases heap escapes, GC scan cost, or nil-check boilerplate.
   - Missing slice/map pre-allocation (`make(..., 0, len(src))`) on non-trivial transformations.
   - Java/TypeScript patterns (`IFooService` / `FooServiceImpl`, `GetX()` accessors, allocating `Map`/`Filter` helpers, `map[string]any` instead of structs) that hurt clarity or performance.

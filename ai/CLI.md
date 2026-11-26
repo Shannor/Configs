@@ -25,9 +25,13 @@ Before installing, check whether Node is managed by nvm or asdf. If so, install 
 Event X uses bitbucket so I need this personally. However Github and Gitlab have
 way better CLIs.
 
+### [YouTrack CLI](https://github.com/JetBrains/youtrack-cli)
+
+Official JetBrains CLI (`brew install jetbrains/utils/youtrack`) used for One Trick (`OT`) issue tracking and Kanban workflows instead of GitHub Issues/Projects.
+
 ### [Jira CLI](https://github.com/ankitpokhrel/jira-cli)
 
-Useful for more than just EventX to help AI manage creating tickets if needed.
+Used for EventX Jira ticket management.
 
 ## PI Plugins
 

@@ -45,7 +45,8 @@ Squash all commits on the current feature/bugfix branch into one well-crafted co
 ### 1.3 Extract Ticket Number
 
 1. Inspect the branch name for a ticket/issue pattern. Common patterns:
-   - `<PREFIX>-<NUMBER>` (e.g., `ex-11`, `JIRA-1234`, `GH-42`)
+   - `<PREFIX>-<NUMBER>` (e.g., `ot-12`, `ex-11`, `JIRA-1234`)
+   - `feat/<PREFIX>-<NUMBER>-description`
    - `feature/<PREFIX>-<NUMBER>-description`
    - `bugfix/<PREFIX>-<NUMBER>-description`
    - `fix/<PREFIX>-<NUMBER>-description`
@@ -223,7 +224,12 @@ EOF
 
 **IMPORTANT:** Run `bb pr create --help` first if you are unsure of the exact flags, as different versions of the `bb` CLI may have different syntax.
 
-### 4.5 Return the PR URL
+### 4.5 Transition Ticket & Return the PR URL
+
+If `TICKET_ID` is a YouTrack ticket (e.g., `OT-12`) and `youtrack` CLI is installed, move its Kanban `Stage` to `In Review`:
+```bash
+/opt/homebrew/bin/youtrack issue field set <TICKET_ID> Stage --value "In Review"
+```
 
 After creation:
 

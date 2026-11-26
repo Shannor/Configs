@@ -1,7 +1,7 @@
 ---
 name: pr-comments-review
 description: >
-  Interactively review, triage, address, and resolve pull request comments on Bitbucket or GitHub. Follows a disciplined review flow: survey all comments first without making changes, walk through each comment 1-by-1 to fix, defer to Jira, or note follow-up PRs, run tests, push changes, and post replies while marking comment threads resolved. Use when the user says "review pr comments", "check pr comments", "address pr comments", "resolve pr comments", or asks to address reviewer feedback on a pull request (use pr-review instead when performing a code review and leaving comments on an existing PR).
+  Interactively review, triage, address, and resolve pull request comments on Bitbucket or GitHub. Follows a disciplined review flow: survey all comments first without making changes, walk through each comment 1-by-1 to fix, defer to YouTrack/Jira, or note follow-up PRs, run tests, push changes, and post replies while marking comment threads resolved. Use when the user says "review pr comments", "check pr comments", "address pr comments", "resolve pr comments", or asks to address reviewer feedback on a pull request (use pr-review instead when performing a code review and leaving comments on an existing PR).
 ---
 
 # PR Comments Review Skill
@@ -13,7 +13,7 @@ Systematically review, triage, address, test, push, and resolve comments on a Pu
 ## Core Philosophy
 
 1. **Observe First, Never Edit Immediately**: On the initial pass, catalog and categorize every comment so the user has the complete landscape before touching any code.
-2. **One-by-One Collaborative Decisions**: Walk through findings one at a time. Explain the exact line, root cause, and potential options (Fix now, Defer to Jira ticket, Note in follow-up PR, or Skip/Intended). Wait for user approval before making changes.
+2. **One-by-One Collaborative Decisions**: Walk through findings one at a time. Explain the exact line, root cause, and potential options (Fix now, Defer to YouTrack/Jira ticket, Note in follow-up PR, or Skip/Intended). Wait for user approval before making changes.
 3. **Verify Every Step**: Run automated unit and integration tests after every change to catch regressions immediately.
 4. **Close the Loop**: When changes are committed and pushed, reply to each review thread with specific details and resolve the comment thread via the CLI.
 
@@ -111,7 +111,7 @@ Go through comments **one at a time**:
 1. Show the code context using `read` or file view.
 2. Present the choices clearly:
    - **Option A / Option B**: Proposed code changes.
-   - **Defer / Log to Jira**: If it belongs in a follow-up ticket (e.g., background cron reaper, broader refactor). Use `jira` CLI tool if available (`jira issue comment add <KEY> "..."` or view ticket).
+   - **Defer / Log to Issue Tracker (YouTrack / Jira)**: If it belongs in a follow-up ticket (e.g., background cron reaper, broader refactor), create or comment on a YouTrack ticket via `youtrack` (`youtrack issue create --project OT ...` / `youtrack issue comment create <KEY> --text "..."`, see `youtrack-cli` skill) — or `jira` CLI on Jira projects.
    - **Covered in Stacked / Follow-up PR**: If a stacked feature branch already supersedes or refactors this area.
    - **Skip / Intended**: If the existing code is intentional or based on external constraints.
 3. **Wait for user decision.**
@@ -168,7 +168,7 @@ For every parent comment thread addressed:
 ### Bitbucket (`bb` CLI):
 1. **Reply to the parent comment**:
    ```bash
-   bb pullrequest comment create --pullrequest <PR-ID> --parent <COMMENT-ID> --comment "Fixed by [brief explanation of fix / commit / Jira ticket]."
+   bb pullrequest comment create --pullrequest <PR-ID> --parent <COMMENT-ID> --comment "Fixed by [brief explanation of fix / commit / ticket ID]."
    ```
 2. **Resolve the comment thread**:
    ```bash
@@ -180,7 +180,7 @@ For every parent comment thread addressed:
 ### GitHub (`gh` CLI):
 1. **Reply to the review thread**:
    ```bash
-   gh pr comment <PR-NUMBER> --reply-to <COMMENT-ID> --body "Fixed by [brief explanation of fix / commit / Jira ticket]."
+   gh pr comment <PR-NUMBER> --reply-to <COMMENT-ID> --body "Fixed by [brief explanation of fix / commit / ticket ID]."
    ```
 2. **Resolve the thread via GraphQL API**:
    ```bash
@@ -199,7 +199,7 @@ For every parent comment thread addressed:
 - [ ] All comments triaged and discussed with user.
 - [ ] Code changes verified with automated tests passing 100%.
 - [ ] New unit tests added for edge cases uncovered by reviews.
-- [ ] Follow-up tasks or deferrals tracked in Jira / issue tracker.
+- [ ] Follow-up tasks or deferrals tracked in YouTrack / Jira.
 - [ ] Changes committed and pushed to remote branch.
 - [ ] Every parent comment thread replied to and marked resolved.
 - [ ] Stacked downstream branches rebased and updated (if applicable).

@@ -64,10 +64,15 @@ Fetch the PR details and any existing review threads so you do not duplicate fee
   Also fetch existing inline review threads via GraphQL if needed so you know what has already been flagged.
 
 ### 1.4 Check Linked Ticket & Project Instructions
-1. **Ticket Context**: If the PR title, description, or branch name references a Jira ticket (e.g., `EX-305`) and `jira` CLI is available:
-   ```bash
-   jira issue view <TICKET-ID>
-   ```
+1. **Ticket Context**: If the PR title, description, or branch name references a YouTrack ticket (e.g., `OT-12`) or Jira ticket (e.g., `EX-305`):
+   - **YouTrack (`OT-*`)**:
+     ```bash
+     /opt/homebrew/bin/youtrack issue view <TICKET-ID> --comments 10
+     ```
+   - **Jira (`EX-*`)**:
+     ```bash
+     /opt/homebrew/bin/jira issue view <TICKET-ID>
+     ```
    Use the ticket description and acceptance criteria to verify the PR solves the right problem completely.
 2. **Project Conventions**: Check `AGENTS.md` / `CLAUDE.md` and `.agents/skills/` in the repository so the review enforces repo-specific architecture and style standards.
 
@@ -276,7 +281,7 @@ After posting, display a clean summary to the user:
 ## Checklist Before Completing
 
 - [ ] Target PR metadata, diff, and existing comments fetched without dirtying the working tree.
-- [ ] Linked Jira ticket and repo conventions (`AGENTS.md` / skills) checked.
+- [ ] Linked YouTrack / Jira ticket and repo conventions (`AGENTS.md` / skills) checked.
 - [ ] Every inline comment line number verified against `origin/<source-branch>:<file>`.
 - [ ] All draft comments and the review verdict reviewed and approved by the user before posting.
 - [ ] Comments and verdict posted via `bb` or `gh` CLI and confirmed with returned IDs/URLs.
