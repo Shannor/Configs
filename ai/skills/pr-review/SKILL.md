@@ -108,22 +108,24 @@ git fetch origin <source-branch> <dest-branch>
 **Specialized Review Skills**:
 - **Backend / Service Architecture**: Read and apply the **`hexagonal-architecture`** skill (`../hexagonal-architecture/SKILL.md`) when reviewing backend services, handlers, or repositories (Ports & Adapters boundaries, service-owned orchestration, plain value domain models over transport/DB DTO leakage, consumer-defined driven ports, and incremental Boy-Scout boundary hygiene).
 - **Go (`.go` files in diff)**: Read and apply the **`golang-review`** skill (`../golang-review/SKILL.md`) to enforce idiomatic Go over Java/TypeScript patterns, Garbage Collector & pointer discipline (`[]T` over `[]*T`, avoiding unnecessary `*string`/value pointers), and `O(n^2)` / N+1 complexity checks.
+- **React / TypeScript (`.ts` / `.tsx` files in diff)**: Read and apply the **`react-typescript-review`** skill (`../react-typescript-review/SKILL.md`) to enforce `children`/slot composition over pass-through prop drilling, flat early-return helpers over nested ternaries, thin components/loaders/actions backed by standalone pure functions, single-pass pure builders (no `.map()` side effects or repeated `.filter()` scans), direct use of generated OpenAPI types without redundant DTO re-mapping, named constants over magic numbers, named exports, and `import.meta.env.DEV` bundle hygiene.
 
 Evaluate the changes across six dimensions:
 
 1. **Correctness, Bugs & Edge Cases**
    - Unhandled errors, nil pointer dereferences, slice/map bounds, concurrency races, resource/goroutine leaks.
-   - Partial failure states, transaction rollbacks, idempotency on retries, pagination/limit edge cases.
+   - Partial failure states, transaction rollbacks, idempotency on retries, pagination/limit edge cases, and composite-key matching bugs (never falling back to an unrelated sibling record when an explicit sub-key doesn't match).
    - Database query correctness (N+1 queries, missing indexes on new filters, GORM v2 / Firestore pitfalls, zero-value updates, soft-delete handling).
 2. **Performance, Complexity & Memory Efficiency**
-   - Algorithmic complexity traps (`O(n^2)` nested linear scans instead of `O(n + m)` map lookups, string `+=` in loops, repeated slice shifting/sorting in loops, N+1 I/O).
-   - Memory & GC pressure (unnecessary pointer indirection/heap escapes, `[]*T` vs `[]T`, missing slice/map capacity pre-allocation).
+   - Algorithmic complexity traps (`O(n^2)` nested linear scans instead of `O(n + m)` map lookups, string `+=` in loops, repeated slice shifting/sorting in loops, chained multi-pass `.filter()` scans, N+1 I/O).
+   - Memory, GC & bundle pressure (unnecessary pointer indirection/heap escapes, `[]*T` vs `[]T`, missing slice/map capacity pre-allocation, dev-only UI/fixtures leaking into production client JS bundles).
 3. **Architecture, Idioms & Project Conventions**
    - Hexagonal / Ports & Adapters boundaries: inward dependency direction, business orchestration in Application Services (not HTTP handlers), plain value domain structs (not leaking HTTP `api.*` or vendor DTOs into core services), and narrow consumer-defined driven ports (`Store` / `Gateway`) returning domain sentinel errors.
-   - Language-idiomatic design (e.g., idiomatic Go rather than Java/TypeScript abstractions).
-   - API & Adapter conventions (OpenAPI spec-first generation, status code mapping, explicit converters between transport/DB DTOs and domain models).
-   - Observability & logging (canonical log rules, `xlog.Fields` / `clog.Fields` camelCase keys, no PII, proper layer group names, no error-group logging inside services/DAOs).
-   - Code style (decomposed helper methods over inline narrative comments).
+   - Frontend component composition & thin orchestrators: `children`/slots over pass-through prop drilling, standalone pure view-model builders and named handlers over bloated inline component/loader/action logic, no `.map()` side-effect mutations, and named exports everywhere.
+   - Language-idiomatic design (e.g., idiomatic Go rather than Java/TypeScript abstractions; flat early-return functions instead of nested ternaries; named constants instead of magic numbers).
+   - API & Adapter conventions (OpenAPI spec-first generation, trusting generated frontend SDK types directly instead of duplicating/re-mapping backend DTOs, status code mapping, explicit converters at backend boundaries).
+   - Observability & logging (canonical/wide-event log rules, `xlog.Fields` / `clog.Fields` / `evlog` structured context, no PII, proper layer group names, no error-group logging inside services/DAOs).
+   - Code style (decomposed helper methods and composable subcomponents over inline narrative comments or JSX variables).
 4. **Security & Authorization**
    - Tenant/promoter isolation and `actor` scoping (`AuthorizedByUser` / `resolveUserID`).
    - Auth bypass risks, unvalidated external input, SQL injection in raw queries, secret exposure.
