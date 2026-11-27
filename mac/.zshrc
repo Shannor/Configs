@@ -84,6 +84,7 @@ if [ -f '/Users/shannortrotty/Documents/google-cloud-sdk/completion.zsh.inc' ]; 
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"
 export PATH="$HOME/flutter/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment

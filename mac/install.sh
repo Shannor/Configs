@@ -39,6 +39,12 @@ asdf set --home nodejs latest:22 2>/dev/null || asdf global nodejs latest:22
 npm i -g cf
 asdf reshim nodejs
 
-# Setup AI agent skills
+# Link custom CLI utilities into ~/.local/bin
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+mkdir -p "$HOME/.local/bin"
+for bin_file in "$SCRIPT_DIR"/bin/*; do
+  [ -f "$bin_file" ] && ln -sf "$bin_file" "$HOME/.local/bin/$(basename "$bin_file")"
+done
+
+# Setup AI agent skills
 "$SCRIPT_DIR/../ai/setup-skills.sh"

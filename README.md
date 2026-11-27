@@ -9,6 +9,17 @@ A place to store my configs for setting up different applications.
 
 Node is managed with asdf. Install global npm CLIs (e.g. `npm i -g cf`) with an asdf node active, then run `asdf reshim nodejs`.
 
+## Local CLI utilities (`mac/bin/`)
+
+Linked into `~/.local/bin/` via `mac/install.sh`:
+
+- `clean-servers`: inspects and stops lingering frontend (`react-router dev`, `vite`, `next`, `esbuild`, `wt step tether`) and Go (`oneTrick`, `go run`, GoLand temp binaries) dev servers across Git and `~/.air/worktrees/temporary/*` worktrees while leaving WebStorm/GoLand language servers and ACP agents untouched.
+  - `clean-servers` — interactive table preview (`[a]ll`, `[s]tale/non-main`, row numbers `1,3-5`, or `[q]uit`)
+  - `clean-servers --list` — read-only table & Activity Monitor memory summary
+  - `clean-servers --all` (or `-y`) — stop all running dev servers immediately
+  - `clean-servers --stale -y` — stop all worktree / `~/.air` / orphaned dev servers, keeping `main` checkouts running
+  - `clean-servers --older-than 4h -y` — stop dev servers running longer than 4 hours
+
 ## AI agent skills
 
 - `ai/skills/<name>/SKILL.md`: shared skills, used by every agent (Claude, Codex, Pi, Copilot CLI, OpenCode, Antigravity/agy).
